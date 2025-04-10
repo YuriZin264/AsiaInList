@@ -26,14 +26,9 @@ app.use(
   })
 );
 
-// Rotas
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
-const pingRoutes = require('./routes/pingRoutes');
-
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api', pingRoutes);
+// Importa todas as rotas organizadas em um único arquivo
+const setupRoutes = require('./routes');
+setupRoutes(app);
 
 // Rota base
 app.get('/', (req, res) => {
