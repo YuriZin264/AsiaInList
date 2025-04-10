@@ -9,9 +9,11 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
+const pool = require('./config/db');
+
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
 
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
