@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -10,10 +11,11 @@ const port = process.env.PORT || 3001;
 // Conexão com banco
 const pool = require('./config/db');
 
-// Middlewares
+// Middlewares globais
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 
+// Sessões com PostgreSQL
 app.use(
   session({
     store: new pgSession({ pool }),
@@ -26,11 +28,14 @@ app.use(
 
 // Rotas
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 const pingRoutes = require('./routes/pingRoutes');
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api', pingRoutes);
 
+// Rota base
 app.get('/', (req, res) => {
   res.send('AsiaInList API rodando!');
 });

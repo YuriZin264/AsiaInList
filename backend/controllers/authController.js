@@ -6,14 +6,11 @@ const register = async (req, res) => {
   const { username, password } = req.body;
   try {
     const hash = await bcrypt.hash(password, 10);
-    await pool.query(
-      'INSERT INTO users (username, password) VALUES ($1, $2)',
-      [username, hash]
-    );
+    await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, hash]);
     res.status(201).json({ message: 'Usuário registrado com sucesso!' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Erro ao registrar' });
+    res.status(500).json({ error: 'Erro ao registrar usuário' });
   }
 };
 
